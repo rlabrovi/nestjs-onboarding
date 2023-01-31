@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -55,7 +55,10 @@ export class UserService {
     return user;
   }
 
-  async update(username: string, updateUserDto: UpdateUserDto) {
+  async update(
+    username: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
     const user = await this.findByUsername(username);
 
     if (!user) {
@@ -67,13 +70,13 @@ export class UserService {
     return await this.repository.save(user);
   }
 
-  async remove(username: string) {
+  async remove(username: string): Promise<DeleteResult> {
     const user = await this.findByUsername(username);
 
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    return await this.repository.delete(username);
+    return await this.repository.delete({ username });
   }
 }

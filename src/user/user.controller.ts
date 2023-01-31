@@ -39,6 +39,7 @@ export class UserController {
   }
 
   @Patch(':username')
+  @UseInterceptors(ClassSerializerInterceptor)
   update(
     @Param('username') username: string,
     @Body() updateUserDto: UpdateUserDto,
