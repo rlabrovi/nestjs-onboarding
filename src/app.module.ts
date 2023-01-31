@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import psqlConfig from './typeorm-psql.config';
 import { UserModule } from './user/user.module';
+import { AuthorModule } from './author/author.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(psqlConfig), UserModule],
+  imports: [TypeOrmModule.forRoot(psqlConfig), UserModule, AuthorModule],
   controllers: [AppController],
   providers: [AppService],
 })
