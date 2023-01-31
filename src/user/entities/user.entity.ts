@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import { hash } from 'bcryptjs';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -18,12 +19,15 @@ export class UserEntity {
   @Column({ default: '' })
   image: string;
 
+  @Exclude()
   @Column({ select: false })
   password: string;
 
+  @Exclude()
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
+  @Exclude()
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
