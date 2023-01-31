@@ -1,5 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 import { AuthorEntity } from './author/entities/author.entity';
+import { BookEntity } from './book/entities/book.entity';
 import { UserEntity } from './user/entities/user.entity';
 
 const config: DataSourceOptions = {
@@ -9,7 +10,7 @@ const config: DataSourceOptions = {
   username: 'library',
   password: 'library',
   database: 'library',
-  entities: [UserEntity, AuthorEntity],
+  entities: [UserEntity, AuthorEntity, BookEntity],
   migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
   synchronize: false,
 };
