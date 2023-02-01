@@ -30,7 +30,7 @@ export class UserService {
 
     if (userByUsername) {
       throw new HttpException(
-        'Username are taken',
+        'Username already taken',
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
