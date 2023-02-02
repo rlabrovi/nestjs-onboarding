@@ -6,14 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
   UsePipes,
   ValidationPipe,
   ClassSerializerInterceptor,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('users')
 export class UserController {
@@ -27,6 +33,8 @@ export class UserController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
     return this.service.findAll();
@@ -48,6 +56,8 @@ export class UserController {
   }
 
   @Delete(':username')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   remove(@Param('username') username: string) {
     return this.service.remove(username);
   }

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { Exclude } from 'class-transformer';
+import { Role } from '../../auth/enums/role.enum';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -18,6 +19,13 @@ export class UserEntity {
 
   @Column({ default: '' })
   image: string;
+
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.User,
+  })
+  roles: Role;
 
   @Exclude()
   @Column({ select: false })

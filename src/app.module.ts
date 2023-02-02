@@ -9,7 +9,13 @@ import { BookModule } from './book/book.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(psqlConfig), UserModule, AuthorModule, BookModule, AuthModule],
+  imports: [
+    TypeOrmModule.forRoot(psqlConfig),
+    UserModule,
+    AuthorModule,
+    BookModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
