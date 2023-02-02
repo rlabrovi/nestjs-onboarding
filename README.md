@@ -3,9 +3,10 @@
 ### MacOs Installation
 
 ```bash
+brew update
 brew install postgresql@14
 brew services stop postgresql@14
-brew services start postgresql@15
+brew services start postgresql@14
 psql postgres
 ```
 
