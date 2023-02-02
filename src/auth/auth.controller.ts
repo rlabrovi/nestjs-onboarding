@@ -6,25 +6,28 @@ import {
   UsePipes,
   ValidationPipe,
   Request,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly service: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('login')
+  @UseGuards(LocalAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   async login(@Request() req) {
     return this.service.login(req.user);
   }
 
   @Post('register')
   @UsePipes(new ValidationPipe())
-  async register(@Body() registerDto: RegisterDto, @Request() req) {
+  @UseInterceptors(ClassSerializerInterceptor)
+  async register(@Body() registerDto: RegisterDto) {
     return this.service.register(registerDto);
   }
 }

@@ -40,18 +40,19 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  async login(user: UserEntity) {
     const payload = {
       sub: user.id,
       username: user.username,
     };
 
     return {
+      ...user,
       access_token: this.jwtService.sign(payload),
     };
   }
 
-  async register(registerDto: RegisterDto): Promise<any> {
+  async register(registerDto: RegisterDto): Promise<UserEntity> {
     return this.userService.create(registerDto);
   }
 }
