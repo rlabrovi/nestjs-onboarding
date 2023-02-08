@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { Exclude } from 'class-transformer';
 import { Role } from '../../auth/enums/role.enum';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'users' })
 export class UserEntity {

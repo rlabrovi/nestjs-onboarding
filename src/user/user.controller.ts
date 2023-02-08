@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Request,
   UsePipes,
   ValidationPipe,
   ClassSerializerInterceptor,
@@ -20,8 +19,10 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('users')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
