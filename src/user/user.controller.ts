@@ -19,7 +19,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
 @ApiTags('users')
@@ -37,6 +37,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiBearerAuth()
   findAll() {
     return this.service.findAll();
   }
@@ -59,6 +60,7 @@ export class UserController {
   @Delete(':username')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
+  @ApiBearerAuth()
   remove(@Param('username') username: string) {
     return this.service.remove(username);
   }

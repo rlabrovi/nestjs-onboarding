@@ -6,7 +6,7 @@ export class UsersTableSeed1675329477840 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       // Password is 1234
-      `INSERT INTO users (username, password, email) values ('vbadun', '$2a$10$xvXtSkv4g0K4pK4QhPAARO5ioqearWSRyr8kyZWjYzNEC7IKp4Kjy', 'vedran.badun@gmail.com'), ('rlabrovi', '$2a$10$xvXtSkv4g0K4pK4QhPAARO5ioqearWSRyr8kyZWjYzNEC7IKp4Kjy', 'roko.labrovic@gmail.com')`,
+      `INSERT INTO users (username, password, email, roles) values ('vbadun', '$2a$10$xvXtSkv4g0K4pK4QhPAARO5ioqearWSRyr8kyZWjYzNEC7IKp4Kjy', 'vedran.badun@gmail.com', 'admin'), ('rlabrovi', '$2a$10$xvXtSkv4g0K4pK4QhPAARO5ioqearWSRyr8kyZWjYzNEC7IKp4Kjy', 'roko.labrovic@gmail.com', 'user')`,
     );
   }
 
