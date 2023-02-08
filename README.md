@@ -63,3 +63,7 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## TODO
+
+- 'admin' role can patch every user, but 'user' role only can patch itself
