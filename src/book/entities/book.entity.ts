@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { AuthorEntity } from 'src/author/entities/author.entity';
 import {
   Entity,
@@ -10,6 +11,7 @@ import {
 
 @Entity({ name: 'books' })
 export class BookEntity {
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,13 +24,15 @@ export class BookEntity {
   @Column()
   pages: number;
 
+  @Exclude()
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
+  @Exclude()
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
-  @ManyToMany(() => AuthorEntity)
+  @ManyToMany(() => AuthorEntity, (author) => author.books)
   @JoinTable({ name: 'books_authors' })
   authors: AuthorEntity[];
 

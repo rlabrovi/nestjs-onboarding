@@ -12,15 +12,15 @@ export class BookService {
     return `This action returns all book`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  findOne(slug: string) {
+    return `This action returns a #${slug} book`;
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+  update(slug: string, updateBookDto: UpdateBookDto) {
+    return `This action updates a #${slug} book`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  remove(slug: string) {
+    return `This action removes a #${slug} book`;
   }
 }

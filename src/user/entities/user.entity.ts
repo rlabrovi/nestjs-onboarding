@@ -6,6 +6,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'users' })
 export class UserEntity {
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
