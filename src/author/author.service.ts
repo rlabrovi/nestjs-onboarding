@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookEntity } from 'src/book/entities/book.entity';
+import { PageMetaDto } from 'src/utils/dto/page-meta.dto';
+import { PageOptionsDto } from 'src/utils/dto/page-options.dto';
+import { PageDto } from 'src/utils/dto/page.dto';
 import { DataSource, Repository } from 'typeorm';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -18,14 +21,25 @@ export class AuthorService {
     return 'This action adds a new author';
   }
 
-  findAll(query: any): Promise<any> {
+  async findAll(
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<AuthorEntity>> {
     const builder = this.dataSource
       .getRepository(AuthorEntity)
       .createQueryBuilder('authors')
-      .leftJoinAndSelect('authors.books', 'books')
-      .getMany();
+      .leftJoinAndSelect('authors.books', 'books');
 
-    return builder;
+    builder
+      .orderBy('authors.createdAt', pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.perPage);
+
+    const total = await builder.getCount();
+    const { entities } = await builder.getRawAndEntities();
+
+    const pageMetaDto = new PageMetaDto({ total, pageOptionsDto });
+
+    return new PageDto(entities, pageMetaDto);
   }
 
   findOne(slug: string) {

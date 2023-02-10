@@ -18,6 +18,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { PageOptionsDto } from 'src/utils/dto/page-options.dto';
 import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -39,8 +40,8 @@ export class AuthorController {
   @Roles(Role.Admin)
   @ApiBearerAuth()
   @UseInterceptors(ClassSerializerInterceptor)
-  findAll(@Query() query: any) {
-    return this.authorService.findAll(query);
+  findAll(@Query() pageOptionsDto: PageOptionsDto) {
+    return this.authorService.findAll(pageOptionsDto);
   }
 
   @Get(':slug')
