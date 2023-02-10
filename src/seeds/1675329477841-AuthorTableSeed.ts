@@ -5,7 +5,11 @@ export class AuthorsTableSeed1675329477841 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `INSERT INTO authors (first_name, last_name, birth_date) values ('Aldous', 'Huxley', '1894-07-25 00:00:00'), ('Mato', 'Lovrak', '1899-03-08 00:00:00')`,
+      `INSERT INTO authors (first_name, last_name, birth_date) values 
+      ('Aldous', 'Huxley', '1894-07-25 00:00:00'), 
+      ('Eckhart', 'Tolle', '1960-06-13 00:00:00'), 
+      ('Ines', 'Abassi', '1945-01-20 00:00:00'), 
+      ('Mato', 'Lovrak', '1899-03-08 00:00:00')`,
     );
   }
 
