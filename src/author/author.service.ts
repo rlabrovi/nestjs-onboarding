@@ -6,6 +6,7 @@ import { PageOptionsDto } from 'src/utils/dto/page-options.dto';
 import { PageDto } from 'src/utils/dto/page.dto';
 import { DataSource, Repository } from 'typeorm';
 import { CreateAuthorDto } from './dto/create-author.dto';
+import { FilterAuthorDto } from './dto/filter-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { AuthorEntity } from './entities/author.entity';
 
@@ -23,14 +24,27 @@ export class AuthorService {
 
   async findAll(
     pageOptionsDto: PageOptionsDto,
+    filterAuthorDto: FilterAuthorDto,
   ): Promise<PageDto<AuthorEntity>> {
     const builder = this.dataSource
       .getRepository(AuthorEntity)
-      .createQueryBuilder('authors')
-      .leftJoinAndSelect('authors.books', 'books');
+      .createQueryBuilder('authors');
+
+    if (filterAuthorDto?.firstName) {
+      builder.where('"authors"."first_name" LIKE :firstName', {
+        firstName: `%${filterAuthorDto.firstName}%`,
+      });
+    }
+
+    if (filterAuthorDto?.lastName) {
+      builder.andWhere('"authors"."last_name" LIKE :lastName', {
+        lastName: `%${filterAuthorDto.lastName}%`,
+      });
+    }
 
     builder
-      .orderBy('authors.createdAt', pageOptionsDto.order)
+      // .innerJoinAndSelect('authors.books', 'books')
+      .orderBy('"authors"."created_at"', pageOptionsDto.order)
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.perPage);
 

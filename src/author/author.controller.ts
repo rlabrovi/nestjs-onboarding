@@ -21,6 +21,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { PageOptionsDto } from 'src/utils/dto/page-options.dto';
 import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
+import { FilterAuthorDto } from './dto/filter-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 
 @Controller('authors')
@@ -40,8 +41,11 @@ export class AuthorController {
   @Roles(Role.Admin)
   @ApiBearerAuth()
   @UseInterceptors(ClassSerializerInterceptor)
-  findAll(@Query() pageOptionsDto: PageOptionsDto) {
-    return this.authorService.findAll(pageOptionsDto);
+  findAll(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Query() filterAuthorDto: FilterAuthorDto,
+  ) {
+    return this.authorService.findAll(pageOptionsDto, filterAuthorDto);
   }
 
   @Get(':slug')
