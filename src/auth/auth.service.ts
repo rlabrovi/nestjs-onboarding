@@ -19,7 +19,7 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.repository.findOne({
       where: { username },
-      select: ['id', 'username', 'email', 'bio', 'image', 'password'],
+      select: ['username', 'email', 'bio', 'image', 'password'],
     });
 
     const isPasswordCorrect = await compare(password, user.password);
@@ -48,7 +48,7 @@ export class AuthService {
 
     return {
       ...user,
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
   }
 
