@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BookEntity } from 'src/book/entities/book.entity';
 import { PageMetaDto } from 'src/utils/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/utils/dto/page-options.dto';
 import { PageDto } from 'src/utils/dto/page.dto';
@@ -43,8 +42,8 @@ export class AuthorService {
     }
 
     builder
-      // .innerJoinAndSelect('authors.books', 'books')
-      .orderBy('"authors"."created_at"', pageOptionsDto.order)
+      .innerJoinAndSelect('authors.books', 'books')
+      .orderBy('authors.createdAt', pageOptionsDto.order)
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.perPage);
 
